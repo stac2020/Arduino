@@ -26,6 +26,8 @@ double dgyX; //accData
 int c_millis = 0;
 int p_millis = 0;
 
+int checkConnection = 0;
+
 void setup() {               
   Serial.begin(9600); //pc와 연결
 
@@ -44,7 +46,16 @@ void setup() {
 }
 
 void loop() {
-  calAngleY(); //상보필터로 얻은 척추의 각도를 처리하는 함수를 실행
+  
+  if(BTSerial.available()){
+    checkConnection = BTSerial.read();
+  }
+
+  if(checkConnection == 200){
+    calAngleY(); //상보필터로 얻은 척추의 각도를 처리하는 함수를 실행
+  }else{
+    
+  }
 }
   
 //------------------------------------------------
@@ -96,7 +107,7 @@ void workingVibration(){
     p_millis = c_millis;     
     if(angle < 80 || angle > 120){
       if(angle < 80 || angle > 120){
-           analogWrite(Vibration, 1000); //진동을 울린다.
+           analogWrite(Vibration, 255); //진동을 울린다.
            delay(300);
            analogWrite(Vibration, 0); //진동을 끈다.  
       }else{
