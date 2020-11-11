@@ -32,7 +32,7 @@ void setup() {
     Serial.println("LSM6DS3센서 오류!");
     while (1);
   }
-  
+   
   String fv = WiFi.firmwareVersion();
   if (fv < WIFI_FIRMWARE_LATEST_VERSION) {
     Serial.println("Please upgrade the firmware");
@@ -60,7 +60,7 @@ void loop() {
    if (client && client.connected()) {
      String request = client.readStringUntil('\n');
      Serial.println(request);
-     client.println(angleString());
+     client.print(angleString());
      client.stop();
    }
 }
